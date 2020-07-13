@@ -1,7 +1,7 @@
 <?php
 
 class Position{
-    //public $result;
+    //добавление клиента
     public function AddClient($number, $name)
     {
         require "connectDB.php";
@@ -9,12 +9,16 @@ class Position{
         $result = mysqli_query($mysqli, $query);
         
     }
+
+    // просмотр списка клиентов
     public function ViewClient()
     {
         require "connectDB.php";
         $query = mysqli_query($mysqli, 'SELECT `id`, `number`, `name` FROM `client`');
         $i=1;
         echo "<table border='1'>";
+        echo "<tr bgcolor='gray'><th>№</th><th>Мобильный</th><th>Имя</th><th>Удалить запись</th></tr>";
+
         while ($result = mysqli_fetch_array($query)) {
             echo"<tr>";
             echo "<td>{$i}</td>";
@@ -27,11 +31,12 @@ class Position{
         echo '</table>';
     }
 
-
+    // удаление данных клиента
     public function DelitClient($id_clients)
     {
         require "connectDB.php";
         $query = mysqli_query($mysqli, "DELETE FROM `client` wHERE `id` = '$id_clients'");
+
         if ($query) {
            //данные удаленны
          } else {
@@ -40,28 +45,38 @@ class Position{
            echo "<a href=index.php>Вернутся на главную страницу</a>";
          }
     }
-
-    public function SearchClient($name)
+    
+    // поиск клиента
+    public function SearchClient($value)
     {
         require "connectDB.php";
-        $query = mysqli_query($mysqli, "SELECT * FROM `client` WHERE `name`='$name'");
+        
+        if (is_numeric($value)){
+            $query = mysqli_query($mysqli, "SELECT * FROM `client` WHERE `number`='$value'");
+        }else{
+            $query = mysqli_query($mysqli, "SELECT * FROM `client` WHERE `name`='$value'");
+        }
+        
         if ($query) {
-            echo '<div class="container" style="border:1px solid #cecece;">';
-            
+            $i = 1;
             if (mysqli_num_rows($query) != 0){
                 echo "<table border='1'>";
+                echo "<tr bgcolor='gray'><th>№</th><th>Мобильный</th><th>Имя</th></tr>";
+
                 while ($result = mysqli_fetch_array($query)) {
                     echo"<tr>";
+                    echo "<td>{$i}</td>";
                     echo "<td>{$result['number']}</td>";
                     echo "<td>{$result['name']}</td>";
                     echo "</tr>";
+                    $i++;
                 }
                 echo '</table>';
 
             }else{
                 echo 'Поиск результатов не дал';
             }
-            echo '</div>';
+           
           } else {
               //произошла ошибка
             echo '<p>Произошла ошибка: '.mysqli_error($mysqli).'</p>';

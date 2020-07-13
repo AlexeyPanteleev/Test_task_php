@@ -1,49 +1,40 @@
 <?php
 // подключение к БД
 require "connectDB.php";
+// подключение к файлу с методами
 require_once("Position.php");
 $viewData = new position;
-$viewData -> ViewClient();
-//$mas = $viewData -> $result;
-/*echo '<div class="container" style="border:1px solid #cecece;">';
-echo '<form action="delite.php" method="POST">';
-echo '<table border="1">';
-
-foreach ($viewData->$result as $key) {
-    echo'<tr>';
-    echo '<td>'.$key->number.'</td>';
-    //$num = $key->number;
-    echo '<td>'.$key->name.'</td>';
-    //echo '<td><a href="/example/"><button>Удалить</button></a></td>';
-    echo '<td><input type="radio" name="formDoor[]" value="'.$key->number.'"></td>';
-    //print_r ($key->number.'-'.$key->name);
-    //echo $key->name.'-';
-    //echo '</br>';
-    echo '</tr>' ;
-}
-
-echo '</table>';
-echo '<input type="submit" value="Удалить">';
-echo ' </form>';
-echo '</div>';*/
-
-
-
-
 ?>
 
-<html>
-    <form action="add.php" method="POST"> 
-    <lable>Введите данные</lable></br>
-    <input type="text" size="40" name="number">
-    <input type="text" size="40" name="name"></br>
-   <input type="submit" value="Добавить">
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+</head>
+<body>
 
+   <h3>Добавление новых клиентов</h3>    
 
+   <form action="add.php" method="POST"> 
+       <lable>Введите номер телефона</lable></br>
+       <input type="number" size="20" name="number" maxlength="11" required></br>
+       <lable>Введите имя</lable></br>
+       <input type="text" size="20" name="name" required></br>
+       <input type="submit" value="Добавить">
+   </form>
+
+   <h3>Поиск клиентов</h3> 
+    
     <form action="search.php" method="POST"> 
-    <lable>Введите</lable></br>
-    <input type="text" size="40" name="name">
-   <input type="submit" value="Найти">
+        <lable>Введите имя или номер</lable></br>
+        <input type="text" size="40" name="value" required>
+        <input type="submit" value="Найти">
     </form>
+
+    <h2>Список клиентов</h2>
+    <?$viewData -> ViewClient();?>
+    
+</body>
 </html>
