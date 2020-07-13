@@ -1,9 +1,12 @@
 <?php
-// подключение к БД
-require "connectDB.php";
-// подключение к файлу с методами
-require_once("Position.php");
-$viewData = new position;
+/**
+ * Фаил с главной странице на которой расположен список калиентов из БД,
+ * а так же форма добавления и поиска информации.
+ */
+require "connectDB.php"; // скрипт подключения к БД
+
+require_once("Position.php"); // подключение к файлу с классом иметодами
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +37,14 @@ $viewData = new position;
     </form>
 
     <h2>Список клиентов</h2>
-    <?$viewData -> ViewClient();?>
+    
+    <?
+    /**
+     * Создание экземпляра класса для вывода информации хранящейся в БД.
+     */
+    $viewData = new position;
+    $viewData -> ViewClient();
+    ?>
     
 </body>
 </html>
